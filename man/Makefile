@@ -1,6 +1,6 @@
 #
 # Makefile for src/man (man page tree)
-#
+# My comment
 
 TOP=..
 .include "$(TOP)/mk/os161.config.mk"
