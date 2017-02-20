@@ -157,6 +157,13 @@ lock_create(const char *name)
 	HANGMAN_LOCKABLEINIT(&lock->lk_hangman, lock->lk_name);
 
 	// add stuff here as needed
+        
+    lock->lock_wchan = wchan_create(lock->lk_name);
+	if(lock->lock_wchan == NULL){
+		kfree(lock->lk_name);
+		kfree(lock);
+		return NULL;
+	}
 
 	return lock;
 }
@@ -167,7 +174,7 @@ lock_destroy(struct lock *lock)
 	KASSERT(lock != NULL);
 
 	// add stuff here as needed
-
+    wchan_destroy(lock->lock_wchan);
 	kfree(lock->lk_name);
 	kfree(lock);
 }
@@ -179,6 +186,7 @@ lock_acquire(struct lock *lock)
 	//HANGMAN_WAIT(&curthread->t_hangman, &lock->lk_hangman);
 
 	// Write this
+    
 
 	(void)lock;  // suppress warning until code gets written
 
